@@ -6,7 +6,7 @@ metadata:
   labels:
     app: {{ .Values.redisFollower.labels.app }}
     role: {{ .Values.redisFollower.labels.role }}
-    tier: {{ .Values.redisFollower.labels.tierr }}
+    tier: {{ .Values.redisFollower.labels.tier }}
 spec:
   replicas: {{ .Values.redisFollower.replicaSet }}
   selector:
