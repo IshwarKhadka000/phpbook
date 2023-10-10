@@ -1,0 +1,47 @@
+redisLeader:
+  name: redis-leader
+  labels:
+    app: redis
+    role: leader
+    tier: backend
+  replicaSet: 1
+  containerName: leader
+  containerImage: "docker.io/redis:6.0.5"
+  containerCPU: 100m
+  containerMemory: 100Mi
+  containerPort: 6379
+  serviceName: redis-leader
+  servicePort: 6379
+  serviceTargetPort: 6379
+  
+redisFollower:
+  name: redis-follower
+  labels:
+    app: redis
+    role: follower
+    tier: backend
+  replicaSet: 2
+  containerName: follower
+  containerImage: gcr.io/google_samples/gb-redis-follower:v2
+  containerCPU: 100m
+  containerMemory: 100Mi
+  containerPort: 6379
+  serviceName: redis-follower
+  servicePort: 6379
+
+
+frontend:
+  name: frontend
+  labels:
+    app: guestbook
+    tier: frontend
+  replicaSet: 3
+  containerName: php-redis
+  containerImage: gcr.io/google_samples/gb-frontend:v5
+  containerEnvName: GET_HOSTS_FROM
+  containerEnvValue: "dns"
+  containerCPU: 100m
+  containerMemory: 100Mi
+  containerPort: 80
+  serviceName: frontend
+  servicePort: 80

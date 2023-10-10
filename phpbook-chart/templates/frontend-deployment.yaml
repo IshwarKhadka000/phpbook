@@ -1,0 +1,29 @@
+# SOURCE: https://cloud.google.com/kubernetes-engine/docs/tutorials/guestbook
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.frontend.name }}
+spec:
+  replicas: {{ .Values.frontend.replicaSet }}
+  selector:
+    matchLabels:
+        app: {{ .Values.frontend.labels.app }}
+        tier: {{ .Values.frontend.labels.tier }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.frontend.labels.app }}
+        tier: {{ .Values.frontend.labels.tier }}
+    spec:
+      containers:
+      - name: {{ .Values.frontend.containerName }}
+        image: {{ .Values.frontend.containerImage }}
+        env:
+        - name: {{ .Values.frontend.containerEnvName }}
+          value: {{ .Values.frontend.containerEnvValue }}
+        resources:
+          requests:
+            cpu: {{ .Values.frontend.containerCPU }}
+            memory: {{ .Values.frontend.containerMemory }}
+        ports:
+        - containerPort: {{ .Values.frontend.containerPort }}

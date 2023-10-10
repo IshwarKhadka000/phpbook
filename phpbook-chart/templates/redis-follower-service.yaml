@@ -1,0 +1,17 @@
+# SOURCE: https://cloud.google.com/kubernetes-engine/docs/tutorials/guestbook
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.redisFollower.serviceName }}
+  labels:
+    app: {{ .Values.redisFollower.labels.app }}
+    role: {{ .Values.redisFollower.labels.role }}
+    tier: {{ .Values.redisFollower.labels.tier }}
+spec:
+  ports:
+    # the port that this service should serve on
+  - port: 6379
+  selector:
+    app: {{ .Values.redisFollower.labels.app }}
+    role: {{ .Values.redisFollower.labels.role }}
+    tier: {{ .Values.redisFollower.labels.tier }}

@@ -1,0 +1,30 @@
+# SOURCE: https://cloud.google.com/kubernetes-engine/docs/tutorials/guestbook
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.redisLeader.name }}
+  labels:
+    app: {{ .Values.redisLeader.labels.app }}
+    role: {{ .Values.redisLeader.labels.role }}
+    tier: {{ .Values.redisLeader.name }}
+spec:
+  replicas: {{ .Values.redisLeader.replicaSet }}
+  selector:
+    matchLabels:
+      app: {{ .Values.redisLeader.labels.app }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.redisLeader.labels.app }}
+        role: {{ .Values.redisLeader.labels.role }}
+        tier: {{ .Values.redisLeader.labels.tier }}
+    spec:
+      containers:
+      - name: {{ .Values.redisLeader.containerName }}
+        image: {{ .Values.redisLeader.containerImage }}
+        resources:
+          requests:
+            cpu: {{ .Values.redisLeader.containerCPU }}
+            memory: {{ .Values.redisLeader.containerMemory }}
+        ports:
+        - containerPort: {{ .Values.redisLeader.containerPort }}
