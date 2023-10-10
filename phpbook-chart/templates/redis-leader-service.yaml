@@ -14,4 +14,4 @@ spec:
   selector:
     app: {{ .Values.redisLeader.labels.app }}
     role: {{ .Values.redisLeader.labels.role }}
-    tier: {{ .Values.redisLeader.labels.backend }}
+    tier: {{ .Values.redisLeader.labels.tier }}
