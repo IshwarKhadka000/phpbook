@@ -1,19 +1,30 @@
 # SOURCE: https://cloud.google.com/kubernetes-engine/docs/tutorials/guestbook
-apiVersion: v1
-kind: Service
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: {{ .Values.frontend.serviceName }}
+  name: {{ .Values.redisFollower.name }}
   labels:
-    app: {{ .Values.frontend.labels.app }}
-    tier: {{ .Values.frontend.labels.tier }}
+    app: {{ .Values.redisFollower.labels.app }}
+    role: {{ .Values.redisFollower.labels.role }}
+    tier: {{ .Values.redisFollower.labels.tierr }}
 spec:
-  # if your cluster supports it, uncomment the following to automatically create
-  # an external load-balanced IP for the frontend service.
-  type: LoadBalancer
-  #type: LoadBalancer
-  ports:
-    # the port that this service should serve on
-  - port: {{ .Values.frontend.servicePort }}
+  replicas: {{ .Values.redisFollower.replicaSet }}
   selector:
-    app: {{ .Values.frontend.labels.app }}
-    tier: {{ .Values.frontend.labels.tier }}
+    matchLabels:
+      app: {{ .Values.redisFollower.labels.app }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.redisFollower.labels.app }}
+        role: {{ .Values.redisFollower.labels.role }}
+        tier: {{ .Values.redisFollower.labels.tier }}
+    spec:
+      containers:
+      - name: {{ .Values.redisFollower.containerName }}
+        image: {{ .Values.redisFollower.containerImage }}
+        resources:
+          requests:
+            cpu: {{ .Values.redisFollower.containerCPU }}
+            memory: {{ .Values.redisFollower.containerMemory }}
+        ports:
+        - containerPort: {{ .Values.redisFollower.containerPort }}
