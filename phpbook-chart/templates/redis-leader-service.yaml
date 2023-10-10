@@ -6,7 +6,7 @@ metadata:
   labels:
     app: {{ .Values.redisLeader.labels.app }}
     role: {{ .Values.redisLeader.labels.role }}
-    tier: {{ .Values.redisLeader.labels.backend }}
+    tier: {{ .Values.redisLeader.labels.tier }}
 spec:
   ports:
   - port: {{ .Values.redisLeader.servicePort }}
